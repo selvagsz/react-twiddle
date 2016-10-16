@@ -1,0 +1,28 @@
+html, body {
+  font-family: $font-family;
+  margin: 0;
+  line-height: $line-height;
+  background-color: #fafafa;
+  min-height: 100%;
+  padding-bottom: 50px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    color: #23527c;
+    border-bottom: 1px solid #23527c;
+  }
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}

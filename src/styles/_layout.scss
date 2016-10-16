@@ -1,0 +1,18 @@
+.header {
+  padding: 20px 30px;
+  font-size: 20px;
+  background: #fff;
+}
+
+.editor-container {
+  display: flex;
+}
+
+.editor-item {
+  flex: 1;
+  min-height: 100vh;
+
+  + .editor-item {
+    border-left: 1px solid #ededed;
+  }
+}

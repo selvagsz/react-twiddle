@@ -1,0 +1,67 @@
+.input {
+  display: block;
+  width: 100%;
+  line-height: 1.4;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 14px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.button {
+  $background-color: #fff;
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: $background-color;
+  border-radius: 2px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+
+  &:not([disabled]):hover {
+    background-color: darken($background-color, 5%);
+  }
+
+  &[disabled] {
+    opacity: 0.8;
+    cursor: not-allowed;
+  }
+}
+
+.button-primary {
+  background-color: #7573dc;
+  border-color: #7573dc;
+  color: #fff;
+
+  &:not([disabled]):hover {
+    background-color: darken(#7573dc, 5%);
+  }
+}
+
+.input-lg, .button-lg {
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.form-horizontal {
+  .input {
+    display: inline-block;
+    width: inherit;
+  }
+
+  fieldset {
+    margin-bottom: 50px;
+  }
+}
