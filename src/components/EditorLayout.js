@@ -1,8 +1,10 @@
 import React from 'react'
+import FileTree from './FileTree/FileTree'
 
 export default (props) => (
   <div className='editor-container'>
     <div className='editor-item folder-tree'>
+      <FileTree />
     </div>
 
     <div className='editor-item code-editor'>
