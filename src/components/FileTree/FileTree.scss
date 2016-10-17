@@ -1,0 +1,26 @@
+.file-tree {
+  padding-left: 15px;
+
+  ul {
+    margin-top: 5px;
+  }
+
+  li {
+    margin-bottom: 5px;
+  }
+
+  > li span + span {
+    margin-left: 4px;
+  }
+
+  .name-container {
+    padding: 3px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #444;
+
+    &:hover {
+      background-color: #eaeaea;
+    }
+  }
+}

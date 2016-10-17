@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Icon } from 'react-fa'
+import './FileTree.scss'
 
 function getNodes(path) {
   return path.split(/\/+/)
@@ -12,7 +13,7 @@ function isFile(name) {
 function constructTree(filePaths = []) {
   return filePaths.reduce((prev, curr, idx, arr) => {
     let nodes = getNodes(curr)
-    function constructSubtree(nodes, subtree) {
+    function constructBranch(nodes, subtree) {
       return nodes.reduce((prev, curr, idx, arr) => {
         if (idx > 0) return prev
         let node = prev[curr] = prev[curr] || {}
@@ -20,12 +21,12 @@ function constructTree(filePaths = []) {
         let nextIdx = idx + 1
         if (nextIdx < arr.length) {
           let children = node.children = node.children || {}
-          children[arr[nextIdx]] = constructSubtree(arr.slice(nextIdx), {})
+          children[arr[nextIdx]] = constructBranch(arr.slice(nextIdx), {})
         }
         return node
       }, subtree)
     }
-    constructSubtree(nodes, prev)
+    constructBranch(nodes, prev)
     return prev
   }, {})
 }

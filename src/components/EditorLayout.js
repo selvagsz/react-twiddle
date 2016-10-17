@@ -1,5 +1,5 @@
 import React from 'react'
-import FileTree from './FileTree/FileTree'
+import FileTree from './FileTree'
 
 export default (props) => (
   <div className='editor-container'>
