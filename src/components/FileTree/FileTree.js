@@ -34,15 +34,20 @@ function constructTree(filePaths = []) {
 const RenderTree = ({ tree }) => (
   <ul className='list-unstyled file-tree'>
     {
-      Object.keys(tree).map((root) => (
-        <li>
-          <div className='name-container'>
-            <Icon name='folder-o' />
-            <span>{root}</span>
-          </div>
-          {tree[root].children && <RenderTree tree={tree[root].children} />}
-        </li>
-      ))
+      Object.keys(tree).map((root) => {
+        let node = tree[root]
+        return (
+          <li>
+            <div className='name-container'>
+              {
+                node.isFile ? <Icon name='file-o' /> : <Icon name='folder-o' />
+              }
+              <span>{root}</span>
+            </div>
+            { node.children && <RenderTree tree={node.children} /> }
+          </li>
+        )
+      })
     }
   </ul>
 )
