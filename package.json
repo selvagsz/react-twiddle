@@ -33,6 +33,7 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "file-loader": "^0.9.0",
     "memory-fs": "^0.3.0",
     "mobx": "^2.6.0",

@@ -23,4 +23,15 @@
       background-color: #eaeaea;
     }
   }
+
+  .subtree-container {
+    height: 0;
+    overflow: hidden;
+  }
+
+  .folder-open {
+    .subtree-container {
+      height: auto;
+    }
+  }
 }
