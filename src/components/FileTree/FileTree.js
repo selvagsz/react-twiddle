@@ -1,69 +1,59 @@
 import React, { Component } from 'react'
-import { Icon } from 'react-fa'
+import Folder from './Folder'
+import File from './File'
 import './FileTree.scss'
+import { inject, observer } from 'mobx-react'
 
-function getNodes(path) {
-  return path.split(/\/+/)
-}
+// {
+//   src: {
+//     '': true,
+//     components: {
+//       '': true,
+//       'App.js': new Buffer('Foo Bar Baz', 'utf-8')
+//     }
+//   }
+// }
 
-function isFile(name) {
-  return new RegExp(/\./).test(name)
-}
 
-function constructTree(filePaths = []) {
-  return filePaths.reduce((prev, curr, idx, arr) => {
-    let nodes = getNodes(curr)
-    function constructBranch(nodes, subtree) {
-      return nodes.reduce((prev, curr, idx, arr) => {
-        if (idx > 0) return prev
-        let node = prev[curr] = prev[curr] || {}
-        node.isFile = isFile(curr)
-        let nextIdx = idx + 1
-        if (nextIdx < arr.length) {
-          let children = node.children = node.children || {}
-          children[arr[nextIdx]] = constructBranch(arr.slice(nextIdx), {})
-        }
-        return node
-      }, subtree)
-    }
-    constructBranch(nodes, prev)
-    return prev
-  }, {})
-}
+class RenderTree extends Component {
+  render() {
+    let { tree } = this.props
+    return (
+      <div>
+        <ul className='list-unstyled file-tree'>
+          {
+            Object.keys(tree).map((leaf) => {
+              if (leaf !== '') {
+                let node = tree[leaf]
 
-const RenderTree = ({ tree }) => (
-  <ul className='list-unstyled file-tree'>
-    {
-      Object.keys(tree).map((root) => {
-        let node = tree[root]
-        return (
-          <li>
-            <div className='name-container'>
-              {
-                node.isFile ? <Icon name='file-o' /> : <Icon name='folder-o' />
+                if (node[''] === true) {
+                  if (Object.keys(node).length > 1) {
+                    return (
+                      <li>
+                        <Folder name={leaf} />
+                        <RenderTree tree={node} />
+                      </li>
+                    )
+                  } else {
+                    return <li><Folder name={leaf} /></li>
+                  }
+                } else {
+                  return <li><File name={leaf} /></li>
+                }
               }
-              <span>{root}</span>
-            </div>
-            { node.children && <RenderTree tree={node.children} /> }
-          </li>
-        )
-      })
-    }
-  </ul>
-)
+            })
+          }
+        </ul>
+      </div>
+    )
+  }
+}
 
+@inject(['fileStore'])
+@observer
 export default class FileTree extends Component {
   render() {
-    let filePaths = [
-      'src/components/Header.js',
-      'src/styles/app.scss',
-      'src/index.js',
-      '.babelrc',
-      '.editorconfig',
-      'webpack.config.js'
-    ]
-
-    let tree = constructTree(filePaths)
+    let tree = this.props.fileStore.getFileTree
 
     return (
       <div>
