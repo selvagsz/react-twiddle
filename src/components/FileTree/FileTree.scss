@@ -30,7 +30,7 @@
   }
 
   .folder-open {
-    .subtree-container {
+    > .subtree-container {
       height: auto;
     }
   }
