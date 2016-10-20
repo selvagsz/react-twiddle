@@ -26,3 +26,13 @@ p {
   margin-top: 0;
   margin-bottom: 10px;
 }
+
+// Normalize third party CSS
+
+.fa-plus-square-o {
+  vertical-align: middle;
+}
+
+.CodeMirror {
+  height: 100vh;
+}

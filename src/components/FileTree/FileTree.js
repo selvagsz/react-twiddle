@@ -17,11 +17,11 @@ import { inject, observer } from 'mobx-react'
 @observer
 export default class FileTree extends Component {
   render() {
-    let tree = this.props.fileStore.getFileTree
+    let root = this.props.fileStore.getFileTree
 
     return (
       <div>
-        <RenderTree tree={tree} />
+        <RenderTree root={root} />
       </div>
     )
   }

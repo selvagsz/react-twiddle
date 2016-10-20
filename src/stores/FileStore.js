@@ -18,8 +18,19 @@ export default class FileStore {
     return this.data
   }
 
-  @action addFile(path) {
+  @action addFolder(path) {
     this.fs.mkdirpSync(path)
     this.readData()
   }
+
+  @action createFile(name, content = new Buffer('', 'utf-8')) {
+    this.fs.writeFileSync(name, content)
+    this.readData()
+  }
+
+  @action removeFile(path) {
+    this.fs.unlinkSync(path)
+    this.readData()
+  }
+
 }

@@ -11,6 +11,9 @@ export default class Folder extends Component {
         {
           isOpen ? <Icon name='folder-open-o' /> : <Icon name='folder-o' />
         }
+        <span className='folder-actions pull-right'>
+          <Icon name='plus-square-o' onClick={this.props.onNew}/>
+        </span>
         <span>{name}</span>
       </div>
     )

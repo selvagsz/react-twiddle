@@ -14,13 +14,17 @@
   }
 
   .name-container {
-    padding: 3px;
+    padding: 3px 10px 3px 3px;
     cursor: pointer;
     font-size: 0.9rem;
     color: #444;
 
     &:hover {
       background-color: #eaeaea;
+
+      .folder-actions {
+        visibility: visible;
+      }
     }
   }
 
@@ -32,6 +36,27 @@
   .folder-open {
     > .subtree-container {
       height: auto;
+    }
+  }
+
+  .folder-actions {
+    visibility: hidden;
+
+    .fa {
+      padding: 3px 6px;
+      color: #666;
+    }
+
+    .fa-plus-square-o:hover {
+      color: #333
+    }
+
+    .fa-trash-o:hover {
+      color: #b75757;
+    }
+
+    .fa + .fa {
+      margin-left: 2px
     }
   }
 }

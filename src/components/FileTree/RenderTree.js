@@ -1,22 +1,27 @@
 import React, { Component } from 'react'
 import cx from 'classnames'
 import FolderContainer from './FolderContainer'
-import File from './File'
 
 export default class RenderTree extends Component {
   render() {
-    let { tree, className } = this.props
+    let { root, className } = this.props
+    let subTree = this.props.subTree || root
+
     return (
       <ul className={cx('list-unstyled file-tree', className)}>
         {
-          Object.keys(tree).map((leaf, idx) => {
-            if (leaf !== '') {
-              let node = tree[leaf]
-              if (node[''] === true) {
-                return <FolderContainer key={idx} node={node} leaf={leaf} />
-              } else {
-                return <li><File key={idx} name={leaf} /></li>
-              }
+          Object.keys(subTree).map((name, idx) => {
+            if (name !== '') {
+              let currentNode = subTree[name]
+              return (
+                <FolderContainer
+                  key={idx}
+                  root={root}
+                  subTree={subTree || root}
+                  currentNode={currentNode}
+                  name={name}
+                />
+              )
             }
           })
         }
