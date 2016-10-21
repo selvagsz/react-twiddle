@@ -4,8 +4,10 @@ import { inject, observer } from 'mobx-react'
 
 import CodeEditor from './CodeEditor'
 import FileTree from './FileTree'
+import OutputFrame from './OutputFrame'
 
-@inject(['editorManager'])
+@inject('editorManager')
+@inject('fileStore')
 @observer
 export default class EditorLayout extends Component {
   render() {
@@ -21,6 +23,7 @@ export default class EditorLayout extends Component {
         </div>
 
         <div className='editor-item output'>
+          <OutputFrame output={props.fileStore.outputFile} />
         </div>
       </div>
     )

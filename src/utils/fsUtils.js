@@ -28,7 +28,7 @@ export const findFilePath = (root, value) => {
 const fileModesMap = new Map()
 fileModesMap.set(/(js|jsx)/, 'javascript')
 fileModesMap.set(/(css)/, 'css')
-fileModesMap.set(/html/, 'html')
+fileModesMap.set(/html/, 'htmlmixed')
 fileModesMap.set(/(md|markdown)/, 'markdown')
 
 

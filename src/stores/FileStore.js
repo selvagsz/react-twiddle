@@ -18,6 +18,10 @@ export default class FileStore {
     return this.data
   }
 
+  @computed get outputFile() {
+    return this.data['app']['index.html']
+  }
+
   @action addFolder(path) {
     return new Promise((resolve, reject) => {
       this.fs.mkdirp(path, (err, res) => {
@@ -31,9 +35,13 @@ export default class FileStore {
     })
   }
 
-  @action createFile(name, content = new Buffer('', 'utf-8')) {
+  @action createFile(file, content = new Buffer('', 'utf-8')) {
+    this.updateFile(file, content)
+  }
+
+  @action updateFile(file, content) {
     return new Promise((resolve, reject) => {
-      this.fs.writeFile(name, content, (err, res) => {
+      this.fs.writeFile(file, content, (err, res) => {
         if (err) {
           reject(err)
         } else {
