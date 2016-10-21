@@ -1,7 +1,8 @@
 .header {
-  padding: 20px 30px;
+  padding: 15px 20px;
   font-size: 20px;
-  background: #fff;
+  background: #383737;
+  color: #61dafb;
 }
 
 .editor-container {
@@ -18,5 +19,7 @@
 }
 
 .folder-tree {
-  flex: 0.65;
+  flex: 0.5;
+  flex-basis: 0;
+  background-color: #fafafa;
 }

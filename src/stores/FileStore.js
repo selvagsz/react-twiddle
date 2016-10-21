@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { extendObservable, observable, computed, action, autorun } from 'mobx'
+import { observable, computed, action } from 'mobx'
 
 export default class FileStore {
   @observable data
@@ -19,18 +19,41 @@ export default class FileStore {
   }
 
   @action addFolder(path) {
-    this.fs.mkdirpSync(path)
-    this.readData()
+    return new Promise((resolve, reject) => {
+      this.fs.mkdirp(path, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          this.readData()
+          resolve(res)
+        }
+      })
+    })
   }
 
   @action createFile(name, content = new Buffer('', 'utf-8')) {
-    this.fs.writeFileSync(name, content)
-    this.readData()
+    return new Promise((resolve, reject) => {
+      this.fs.writeFile(name, content, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          this.readData()
+          resolve(res)
+        }
+      })
+    })
   }
 
   @action removeFile(path) {
-    this.fs.unlinkSync(path)
-    this.readData()
+    return new Promise((resolve, reject) => {
+      this.fs.unlink(path, (err, res) => {
+        if (err) {
+          reject(err)
+        } else {
+          this.readData()
+          resolve(res)
+        }
+      })
+    })
   }
-
 }

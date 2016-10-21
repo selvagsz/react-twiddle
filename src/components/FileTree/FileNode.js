@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Icon } from 'react-fa'
 
-export default class File extends Component {
+export default class FileNode extends Component {
   render() {
     let { name } = this.props
 

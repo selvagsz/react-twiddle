@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import RenderTree from './RenderTree'
+import FolderContainer from './FolderContainer'
 import './FileTree.scss'
 import { inject, observer } from 'mobx-react'
 
@@ -21,7 +21,7 @@ export default class FileTree extends Component {
 
     return (
       <div>
-        <RenderTree root={root} />
+        <FolderContainer root={root} />
       </div>
     )
   }
