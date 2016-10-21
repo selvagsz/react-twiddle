@@ -9,7 +9,7 @@ const fs = new MemoryFileSystem({
     '': true,
     components: {
       '': true,
-      'App.js': new Buffer('App.js', 'utf-8')
+      'App.js': new Buffer("require('./style.css');\nvar template = require('./template.jade');\ndocument.write(template({hello: 'World!'}));", "utf-8"),
     }
   },
   node_modules: {

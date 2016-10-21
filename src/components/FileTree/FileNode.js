@@ -6,7 +6,7 @@ export default class FileNode extends Component {
     let { name } = this.props
 
     return (
-      <div className='name-container'>
+      <div className='name-container' onClick={this.props.onOpenFile}>
         <span className='folder-actions pull-right'>
           <Icon name='trash-o' onClick={this.props.onDeleteFile} />
         </span>

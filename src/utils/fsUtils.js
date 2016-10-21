@@ -1,4 +1,4 @@
-export default function findFilePath(root, value) {
+export const findFilePath = (root, value) => {
   let paths = ['']
   let found = false
 
@@ -23,4 +23,19 @@ export default function findFilePath(root, value) {
 
   traverse(root)
   return paths.join('/')
+}
+
+const fileModesMap = new Map()
+fileModesMap.set(/(js|jsx)/, 'javascript')
+fileModesMap.set(/(css)/, 'css')
+fileModesMap.set(/html/, 'html')
+fileModesMap.set(/(md|markdown)/, 'markdown')
+
+
+export const getFileMode = (file = '') => {
+  let ext = file.split('.').pop()
+
+  for (var [key, value] of fileModesMap) {
+    if (key.test(ext)) return value
+  }
 }

@@ -6,9 +6,10 @@ import { Icon } from 'react-fa'
 import FolderContainer from './FolderContainer'
 import FileNode from './FileNode'
 import FolderNode from './FolderNode'
-import findFilePath from 'utils/findFilePath'
+import { findFilePath } from 'utils/fsUtils'
 
-@inject(['fileStore'])
+@inject('fileStore')
+@inject('editorManager')
 @observer
 export default class FolderTree extends Component {
   @observable isOpen = false
@@ -18,10 +19,10 @@ export default class FolderTree extends Component {
     this.toggleFolder = ::this.toggleFolder
     this.addNewFile = ::this.addNewFile
     this.deleteFile = ::this.deleteFile
+    this.openFile = ::this.openFile
   }
 
   @action deleteFile(event) {
-    debugger
     let filePath = findFilePath(this.props.root, this.props.currentNode)
     this.props.fileStore.removeFile(filePath)
     event.stopPropagation()
@@ -44,12 +45,18 @@ export default class FolderTree extends Component {
     event.stopPropagation()
   }
 
+  @action openFile(event) {
+    let filePath = findFilePath(this.props.root, this.props.currentNode)
+    this.props.editorManager.openFile(filePath, this.props.currentNode)
+    event.stopPropagation()
+  }
+
   render() {
     let { root, currentNode, name } = this.props
     let isOpen = this.isOpen
 
     return (
-      <li onClick={this.toggleFolder} >
+      <li onClick={this.toggleFolder} className={cx({'is-file-opened': this.isActive})}>
         {
           currentNode[''] === true ?
           <div className={cx({'folder-open': isOpen})} >
@@ -66,7 +73,11 @@ export default class FolderTree extends Component {
             />
           </div> :
 
-          <FileNode name={name} onDeleteFile={this.deleteFile} />
+          <FileNode
+            name={name}
+            onOpenFile={this.openFile}
+            onDeleteFile={this.deleteFile}
+          />
         }
       </li>
     )
