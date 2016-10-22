@@ -10,6 +10,26 @@ import OutputFrame from './OutputFrame'
 @inject('fileStore')
 @observer
 export default class EditorLayout extends Component {
+  constructor() {
+    super(...arguments)
+    this.state = {
+      stats: null,
+      output: '',
+      error: null
+    }
+
+    this.compileOutput = ::this.compileOutput
+  }
+
+  @action compileOutput() {
+    this.props.editorManager.run().then(({ stats, output }) => {
+      this.setState({
+        stats,
+        output
+      })
+    })
+  }
+
   render() {
     let props = this.props
     return (
@@ -23,7 +43,10 @@ export default class EditorLayout extends Component {
         </div>
 
         <div className='editor-item output'>
-          <OutputFrame output={props.fileStore.outputFile} />
+          <OutputFrame
+            onRun={this.compileOutput}
+            output={this.state.output}
+          />
         </div>
       </div>
     )

@@ -18,10 +18,6 @@ export default class FileStore {
     return this.data
   }
 
-  @computed get outputFile() {
-    return this.data['app']['index.html']
-  }
-
   @action addFolder(path) {
     return new Promise((resolve, reject) => {
       this.fs.mkdirp(path, (err, res) => {

@@ -4,7 +4,8 @@ import { observer, inject } from 'mobx-react'
 import { getFileMode } from 'utils/fsUtils'
 
 let defaultOptions = {
-  lineNumbers: true
+  lineNumbers: true,
+  lineWrapping: true
 }
 
 @inject('fileStore')

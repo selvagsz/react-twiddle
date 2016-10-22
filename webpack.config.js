@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -34,6 +35,10 @@ module.exports = {
             'transform-decorators-legacy'
           ]
         }
+      },
+      {
+        test: /\.(json)$/,
+        loader: 'json'
       },
       {
         test: /\.(scss|css)$/,

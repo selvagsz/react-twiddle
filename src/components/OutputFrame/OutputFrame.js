@@ -6,7 +6,10 @@ import { observer } from 'mobx-react'
 export default class OutputFrame extends Component {
   render() {
     return (
-      <div>
+      <div className='output-frame-container'>
+        <div>
+          <button className='pull-right' onClick={this.props.onRun}>Run</button>
+        </div>
         <iframe
           className='output-frame'
           sandbox='allow-forms allow-modals allow-scripts'
