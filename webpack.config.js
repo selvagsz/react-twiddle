@@ -1,8 +1,11 @@
+'use strict'
+
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const argv = require('minimist')(process.argv.slice(2))
 
-module.exports = {
+let webpackConfig = {
   resolve: {
     root: [
       path.resolve('node_modules'),
@@ -66,3 +69,24 @@ module.exports = {
     inline: true
   }
 }
+
+if (argv.env === 'production') {
+  webpackConfig.plugins = webpackConfig.plugins.concat([
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false,
+      },
+      output: {
+        comments: false,
+      },
+    }),
+
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    })
+  ])
+}
+
+module.exports = webpackConfig

@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "rm -rf dist/ && webpack-dev-server"
+    "dev": "rm -rf dist/ && webpack-dev-server",
+    "prod": "rm -rf dist/ && webpack --env=production"
   },
   "keywords": [
     "webpack",
     "react",
     "react fiddle",
-    "react playground"
+    "react playground",
+    "react twiddle"
   ],
   "author": "selvagsz (selvaganeshbsg@gmail.com)",
   "license": "MIT",
@@ -26,6 +28,7 @@
     "css-loader": "^0.25.0",
     "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.4",
+    "minimist": "^1.2.0",
     "mobx-react-devtools": "^4.2.9",
     "node-sass": "^3.10.0",
     "sass-loader": "^4.0.2",
@@ -34,6 +37,7 @@
     "webpack-dev-server": "^1.16.1"
   },
   "dependencies": {
+    "babel-standalone": "^6.17.0",
     "classnames": "^2.2.5",
     "file-loader": "^0.9.0",
     "memory-fs": "^0.3.0",
