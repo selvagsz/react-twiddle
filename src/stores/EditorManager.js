@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
 import webpack from 'webpack'
+import { loadAnonymousModule } from 'utils/moduleUtils'
 
 export default class EditorManager {
   @observable tab = {}
@@ -33,16 +34,11 @@ export default class EditorManager {
   }
 
   @action run() {
-    let compiler = webpack({
-      inputFileSystem: this.fileStore.fs,
-      outputFileSystem: this.fileStore.fs,
-      entry: './app',
-      output: {
-        path: '/dist',
-        filename: 'bundle.js'
-      }
-    })
+    let webpackConfigString = this.fileStore.fs.readFileSync('/webpack.config.js', 'utf-8')
+    let webpackConfig = loadAnonymousModule(webpackConfigString)
+    webpackConfig.inputFileSystem = webpackConfig.outputFileSystem = this.fileStore.fs
 
+    let compiler = webpack(webpackConfig)
     return new Promise((resolve, reject) => {
       compiler.run((err, stats) => {
         if (err) return reject(err.stack)

@@ -33,11 +33,11 @@ let defaultIndex = `console.log('Hello')`
 let defaultWebpackConfig =
 `module.exports = {
   entry: {
-    app: ['./app']
+    app: ['/app']
   },
 
   output: {
-    path: './dist',
+    path: '/dist',
     filename: 'bundle.js'
   }
 }`
