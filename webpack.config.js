@@ -7,10 +7,40 @@ const argv = require('minimist')(process.argv.slice(2))
 
 let webpackConfig = {
   resolve: {
-    root: [
+    modules: [
       path.resolve('node_modules'),
+      path.resolve(__dirname, 'web_modules'),
       path.resolve('./src'),
     ],
+  },
+
+  resolveLoader: {
+    modules: ['loaders', 'node_modules']
+  },
+
+  node: {
+    tls: 'mock',
+    net: 'mock',
+    child_process: 'empty',
+    module: 'empty',
+    path: true,
+    assert: true,
+    events: true,
+    stream: true,
+    _stream_duplex: true,
+    _stream_passthrough: true,
+    _stream_readable: true,
+    _stream_transform: true,
+    _stream_writable: true,
+    string_decoder: true,
+    sys: true,
+    console: false,
+    global: true,
+    process: true,
+    __filename: "mock",
+    __dirname: "mock",
+    Buffer: true,
+    setImmediate: true
   },
 
   entry: {
@@ -18,47 +48,100 @@ let webpackConfig = {
   },
 
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
   },
 
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /\.(js)$/,
+        include: [
+          path.resolve(__dirname, 'node_modules/rc'),
+        ],
+        use: [
+          {
+            loader: 'remove-hashbang-loader'
+          }
+        ]
+      },
       {
         test: /\.(js|jsx)$/,
         include: [
+          path.resolve(__dirname, 'node_modules'),
           path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'web_modules')
+          path.resolve(__dirname, 'web_modules'),
         ],
-        loader: 'babel',
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react', 'stage-1'],
-          plugins: [
-            'transform-decorators-legacy'
-          ]
-        }
+        exclude: [
+          path.resolve(__dirname, 'node_modules/tar'),
+          path.resolve(__dirname, 'node_modules/errno'),
+        ],
+        use: [
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: true,
+              presets: ['es2015', 'react', 'stage-1'],
+              plugins: [
+                'transform-decorators-legacy'
+              ]
+            }
+          },
+        ]
       },
       {
         test: /\.(json)$/,
-        loader: 'json'
+        use: [
+          {
+            loader: 'json-loader'
+          }
+        ]
       },
       {
         test: /\.(scss|css)$/,
-        loader: 'style!css?modules&localIdentName=[local]!sass?paths=/src'
+        use: [
+          {
+            loader: 'style-loader',
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ]
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              mimetype: 'application/font-woff'
+            }
+          }
+        ]
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader'
+        use: [
+          {
+            loader: 'file-loader'
+          }
+        ]
       }
     ]
   },
 
   plugins: [
+    new webpack.ProvidePlugin({
+      "__webpack_require_loader__": path.join(__dirname, "web_modules", "webpackLoaders.js")
+    }),
+
     new HtmlWebpackPlugin({
       template: './src/index.html'
     })
